@@ -88,6 +88,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
       <textarea id="blurb" name="blurb" maxlength="300"></textarea>
       <input class="hp" id="hp" name="company_fax" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="chk"><input id="consent" type="checkbox"><label for="consent" style="font-weight:400;margin:0"><span id="t_consent"></span> <a id="t_priv" target="_blank" rel="noopener"></a></label></div>
+      <div class="chk"><input id="contact" type="checkbox"><label for="contact" style="font-weight:400;margin:0"><span id="t_contact"></span></label></div>
       <div class="err" id="err" role="alert"></div>
       <button id="go" type="submit"></button>
     </form>
@@ -137,6 +138,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
       sub: 'Our local AI reads your website and lists where AI and automation could help. Takes about a minute, and it lands in your inbox too.',
       name: 'Your name', email: 'Work email', web: 'Company website', blurb: 'One line about what your company does', opt: '(optional, helps a lot if your site is thin)',
       consent: 'I agree that ' + (CFG.company || '') + ' stores my details and emails me this one brief. Kept for ' + (CFG.retentionDays || 30) + ' days.', priv: 'Privacy',
+      contact: 'Optional: you may contact me about my brief afterwards.',
       go: 'Create my brief', local: 'Your website is read by our server and analysed by a model running on our laptop. Nothing is sent to an AI cloud.',
       wait_h: 'Hang tight, ', wait_sub: 'Please keep this page open. If you close it, the brief still arrives by email.',
       s_queued: 'Waiting in line', s_fetching: 'Reading your website', s_thinking: 'Local AI is thinking', s_done: 'Brief ready',
@@ -157,6 +159,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
       sub: 'Unsere lokale KI liest Ihre Website und zeigt, wo KI und Automatisierung helfen können. Dauert etwa eine Minute, und der Brief kommt auch per E-Mail.',
       name: 'Ihr Name', email: 'Geschäftliche E-Mail', web: 'Website Ihres Unternehmens', blurb: 'Eine Zeile dazu, was Ihr Unternehmen macht', opt: '(optional, hilft bei dünnen Websites)',
       consent: 'Ich bin einverstanden, dass ' + (CFG.company || '') + ' meine Daten speichert und mir diesen einen Brief per E-Mail sendet. Speicherdauer ' + (CFG.retentionDays || 30) + ' Tage.', priv: 'Datenschutz',
+      contact: 'Optional: Sie dürfen mich im Anschluss zu meinem Brief kontaktieren.',
       go: 'Meinen Brief erstellen', local: 'Ihre Website wird von unserem Server gelesen und von einem Modell auf unserem Laptop analysiert. Nichts geht an eine KI-Cloud.',
       wait_h: 'Einen Moment, ', wait_sub: 'Bitte lassen Sie diese Seite offen. Schließen Sie sie, kommt der Brief trotzdem per E-Mail.',
       s_queued: 'In der Warteschlange', s_fetching: 'Website wird gelesen', s_thinking: 'Lokale KI denkt nach', s_done: 'Brief fertig',
@@ -181,7 +184,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
   function tt(k) { return T[lang][k]; }
   function apply() {
     document.documentElement.lang = lang;
-    var map = { t_badge: 'badge', t_h1: 'h1', t_sub: 'sub', t_name: 'name', t_email: 'email', t_web: 'web', t_blurb: 'blurb', t_opt: 'opt', t_consent: 'consent', t_priv: 'priv', t_local: 'local', t_quick: 'quick', t_done_h: 'done_h', t_fail_h: 'fail_h', t_fail_p: 'fail_p', t_wait_sub: 'wait_sub' };
+    var map = { t_badge: 'badge', t_h1: 'h1', t_sub: 'sub', t_name: 'name', t_email: 'email', t_web: 'web', t_blurb: 'blurb', t_opt: 'opt', t_consent: 'consent', t_contact: 'contact', t_priv: 'priv', t_local: 'local', t_quick: 'quick', t_done_h: 'done_h', t_fail_h: 'fail_h', t_fail_p: 'fail_p', t_wait_sub: 'wait_sub' };
     Object.keys(map).forEach(function (id) { var el = $(id); if (el) el.textContent = tt(map[id]); });
     $('go').textContent = tt('go'); $('retry').textContent = tt('retry'); $('cta').textContent = tt('cta'); $('net').textContent = tt('net');
     $('t_wait_h').textContent = tt('wait_h') + (firstName || '');
@@ -299,7 +302,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
     var bad = validate(); $('err').textContent = bad ? tt(bad) : '';
     if (bad) return;
     $('go').disabled = true; firstName = $('name').value.trim().split(/\s+/)[0] || '';
-    var payload = { name: $('name').value, email: $('email').value, website: $('website').value, blurb: $('blurb').value, consent: true, hp: $('hp').value, lang: lang };
+    var payload = { name: $('name').value, email: $('email').value, website: $('website').value, blurb: $('blurb').value, consent: true, contact: $('contact').checked, hp: $('hp').value, lang: lang };
     lastPayload = payload; try { sessionStorage.setItem('dsa_payload', JSON.stringify(payload)); } catch (e) {}
     submit(payload).then(function (j) {
       jobId = j.jobId; persistJob(jobId); save('dsa_email', $('email').value);
@@ -328,7 +331,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
   $('again').addEventListener('click', function () {   // new brief for another company: keep name + email, ask for website and consent again
     clearTimeout(pollTimer); persistJob(null); jobId = null; lastPayload = null;
     try { sessionStorage.removeItem('dsa_payload'); } catch (e) {}
-    $('website').value = ''; $('blurb').value = ''; $('consent').checked = false; $('err').textContent = ''; $('go').disabled = false;
+    $('website').value = ''; $('blurb').value = ''; $('consent').checked = false; $('contact').checked = false; $('err').textContent = ''; $('go').disabled = false;
     show('form'); try { $('website').focus(); } catch (e) {}
   });
   $('retry').addEventListener('click', function () { $('go').disabled = false; show('form'); });
