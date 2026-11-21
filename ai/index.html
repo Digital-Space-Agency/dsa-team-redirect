@@ -4,58 +4,75 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#07051a">
+<link rel="icon" href="https://www.digitalspaceagency.com/assets/images/favicon.svg" type="image/svg+xml">
 <title>AI opportunity brief</title>
 <style>
-:root{--bg:#0b1020;--card:#141b34;--ink:#eef2ff;--mut:#9aa6c9;--acc:#6ee7b7;--acc2:#38bdf8;--bad:#fca5a5;--line:#26305a}
-@media (prefers-color-scheme:light){:root{--bg:#f4f6fb;--card:#fff;--ink:#0f172a;--mut:#53607f;--acc:#047857;--acc2:#0369a1;--bad:#b91c1c;--line:#dbe2f2}}
+@font-face{font-family:'Avenir LT Std';src:url('https://www.digitalspaceagency.com/assets/font/subset-AvenirLTStd-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap}
+:root{--sec:#ff706f;--pur:#a24bd8;--bg:#07051a;--text:#f2f0ff;--ink:#f2f0ff;--muted:#a9a6cf;--mut:#a9a6cf;--line:rgba(185,168,255,.18);--glass:rgba(22,16,60,.55);--lav:#b9a8ff;--bad:#ff9b9a;--ok:#7ee0b5}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:env(safe-area-inset-top) 16px 40px}
-main{max-width:520px;margin:0 auto;padding-top:18px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--mut);font-size:13px}
-.pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 10px}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--acc)}
-h1{font-size:26px;line-height:1.15;margin:18px 0 6px}
-p.sub{margin:0 0 18px;color:var(--mut)}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
-label{display:block;font-weight:600;font-size:14px;margin:12px 0 6px}
-label small{font-weight:400;color:var(--mut)}
-input[type=text],input[type=email],textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit}
-input:focus,textarea:focus{outline:2px solid var(--acc2);outline-offset:1px}
-textarea{min-height:70px;resize:vertical}
+html{-webkit-font-smoothing:antialiased}
+body{margin:0;font-family:'Avenir LT Std',Avenir,'Avenir Next',system-ui,-apple-system,'Segoe UI',sans-serif;font-weight:500;font-size:16px;line-height:1.55;color:var(--text);
+background:radial-gradient(900px 600px at 90% -10%,rgba(80,40,200,.38),transparent 60%),radial-gradient(700px 500px at -20% 45%,rgba(255,112,111,.13),transparent 60%),var(--bg);background-attachment:fixed;min-height:100vh;padding:env(safe-area-inset-top) 18px 40px}
+main{max-width:520px;margin:0 auto;padding-top:16px}
+a{color:var(--sec)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.logo{display:block;width:72px;height:auto}
+.logo svg{display:block;width:100%;height:auto;filter:brightness(0) invert(1)}
+.pill{display:inline-flex;gap:8px;align-items:center;color:var(--sec);text-transform:uppercase;letter-spacing:.12em;font-size:11.5px;margin:26px 0 0;line-height:1.4}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--sec);box-shadow:0 0 10px var(--sec);flex:none}
+h1{font-size:30px;line-height:1.12;margin:12px 0 10px;letter-spacing:-.01em;font-weight:700}
+p.sub{margin:0 0 20px;color:var(--muted);font-size:16.5px}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:14px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
+label:first-child{margin-top:2px}
+label small{font-weight:500;color:var(--muted)}
+input[type=text],input[type=email],textarea{width:100%;padding:13px 15px;border-radius:12px;border:1px solid var(--line);background:rgba(7,5,26,.55);color:var(--text);font:inherit;font-size:16px}
+input::placeholder,textarea::placeholder{color:rgba(169,166,207,.6)}
+input:focus,textarea:focus{outline:2px solid var(--lav);outline-offset:1px;border-color:transparent}
+textarea{min-height:72px;resize:vertical}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.chk{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:13px;color:var(--mut)}
-.chk input{margin-top:3px;width:20px;height:20px;flex:none}
-.chk a{color:var(--acc2)}
-button{width:100%;margin-top:16px;padding:15px;border:0;border-radius:12px;font:inherit;font-weight:700;color:#04210f;background:linear-gradient(90deg,var(--acc),var(--acc2));cursor:pointer}
+.chk{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:13.5px;color:var(--muted)}
+.chk input{margin-top:2px;width:20px;height:20px;flex:none;accent-color:var(--sec)}
+.chk label{font-weight:500}
+.chk a{color:var(--sec)}
+button{width:100%;margin-top:18px;padding:15px 24px;border:0;border-radius:999px;font:inherit;font-weight:700;font-size:16px;color:#fff;background:linear-gradient(135deg,var(--sec),var(--pur));box-shadow:0 8px 30px rgba(255,112,111,.28);cursor:pointer;transition:transform .2s}
+button:active{transform:translateY(1px)}
 button[disabled]{opacity:.55}
-button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:600}
+button.ghost{background:transparent;color:var(--text);border:2px solid var(--lav);box-shadow:none;font-weight:700}
+#lang{width:auto;margin:0;padding:5px 14px;font-size:13px;border-width:1.5px}
 .err{color:var(--bad);font-size:14px;margin-top:10px;min-height:1.2em}
-.banner{display:none;margin:10px 0;padding:10px 12px;border-radius:12px;background:#f59e0b22;border:1px solid #f59e0b66;font-size:14px}
-.steps{list-style:none;margin:6px 0 0;padding:0}
-.steps li{display:flex;gap:12px;align-items:center;padding:10px 0;color:var(--mut)}
-.steps li .b{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;flex:none}
-.steps li.on{color:var(--ink);font-weight:600}
-.steps li.on .b{border-color:var(--acc2);animation:pulse 1.2s infinite}
-.steps li.ok .b{background:var(--acc);border-color:var(--acc);color:#04210f}
-@keyframes pulse{50%{box-shadow:0 0 0 6px #38bdf833}}
-.opp{padding:12px 0;border-top:1px solid var(--line)}
-.opp:first-of-type{border-top:0}
-.opp h3{margin:0 0 4px;font-size:16px}
-.opp p{margin:4px 0;color:var(--mut);font-size:14px}
-.opp b{color:var(--ink)}
-.tag{font-size:11px;font-weight:700;background:#0ea5e922;color:var(--acc2);border-radius:8px;padding:2px 7px;margin-left:6px;white-space:nowrap}
-.note{font-size:13px;color:var(--mut)}
-.warn{background:#f59e0b22;border:1px solid #f59e0b66;border-radius:12px;padding:10px 12px;font-size:14px;margin-bottom:12px}
-a.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;padding:14px;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:700}
+.banner{display:none;margin:10px 0;padding:10px 14px;border-radius:12px;background:rgba(255,112,111,.12);border:1px solid rgba(255,112,111,.4);font-size:14px}
+.steps{list-style:none;margin:4px 0 0;padding:0}
+.steps li{display:flex;gap:12px;align-items:center;padding:10px 0;color:var(--muted)}
+.steps li .b{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;flex:none}
+.steps li.on{color:var(--text);font-weight:700}
+.steps li.on .b{border-color:var(--lav);animation:pulse 1.2s infinite}
+.steps li.ok{color:var(--text)}
+.steps li.ok .b{background:linear-gradient(135deg,var(--sec),var(--pur));border-color:transparent;color:#fff}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(185,168,255,.22)}}
+.opp{padding:14px 0;border-top:1px solid var(--line)}
+.opp:first-of-type{border-top:0;padding-top:2px}
+.opp h3{margin:0 0 4px;font-size:17px;line-height:1.3}
+.opp p{margin:4px 0;color:var(--muted);font-size:14.5px}
+.opp b{color:var(--text)}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sec);border:1px solid rgba(255,112,111,.45);border-radius:999px;padding:1px 8px;margin-left:8px;vertical-align:2px;white-space:nowrap}
+.note{font-size:13.5px;color:var(--muted)}
+.warn{background:rgba(255,112,111,.1);border:1px solid rgba(255,112,111,.4);border-radius:14px;padding:12px 14px;font-size:14px;margin-bottom:14px}
+#summary p{margin:0}
+a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;padding:14px 24px;border-radius:999px;background:linear-gradient(135deg,var(--sec),var(--pur));color:#fff;font-weight:700;box-shadow:0 8px 30px rgba(255,112,111,.28)}
+.foot{margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.foot a{color:var(--muted)}
 .hide{display:none!important}
 </style>
 </head>
 <body>
 <main>
   <div class="top">
-    <span class="pill"><span class="dot"></span><span id="t_badge"></span></span>
-    <button id="lang" class="ghost" style="width:auto;margin:0;padding:6px 12px" type="button">DE</button>
+    <a class="logo" href="https://www.digitalspaceagency.com" target="_blank" rel="noopener"><svg role="img" aria-label="Digital Space Agency" width="80px" height="34px" viewBox="0 0 80 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <defs> <polygon id="path-1" points="0.356752475 0.348257143 30.2141782 0.348257143 30.2141782 28.3333333 0.356752475 28.3333333"></polygon> <polygon id="path-3" points="0.139881188 0.303571429 6.55889109 0.303571429 6.55889109 6.86354762 0.139881188 6.86354762"></polygon> </defs> <g id="Desktop-HD" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-49.000000, -36.000000)"> <g id="Logo" transform="translate(49.000000, 36.000000)"> <path d="M15.5477228,24.1553 C14.3873267,25.1145857 12.7247525,25.5930143 10.5584158,25.5930143 L8.8570297,25.5930143 L8.8570297,13.6954429 L10.9069307,13.6954429 C12.840396,13.6954429 14.3873267,14.2013952 15.5477228,15.2124905 C16.7081188,16.2235857 17.2879208,17.6353952 17.2879208,19.447919 C17.2879208,21.6279667 16.7081188,23.1968238 15.5477228,24.1553 M25.2554455,12.865681 C24.3524752,11.1001095 23.1477228,9.68344286 21.6388119,8.61649048 C20.1306931,7.54872857 18.390495,6.7983 16.4182178,6.36277619 C14.4451485,5.9280619 12.3762376,5.71110952 10.2106931,5.71110952 L0,5.71110952 L0,33.6340143 C6.03643564,32.2562048 13.3726733,31.191681 21.5374257,30.5529667 C21.6427723,30.4752524 21.7489109,30.3983476 21.8518812,30.3165857 C23.2958416,29.1703 24.4491089,27.7018238 25.3132673,25.9095381 C26.1766337,24.1180619 26.6091089,21.9963 26.6091089,19.5458714 C26.6091089,16.8574429 26.1576238,14.6312524 25.2554455,12.865681" id="Fill-1" fill="#260780"></path> <path d="M46.1978614,18.3795095 C45.2822178,17.7076048 44.2834059,17.1611762 43.2006337,16.7394143 C42.1178614,16.3176524 41.0857822,15.9485095 40.1067723,15.6319857 C39.1523168,15.3162714 38.4624158,15.0531762 38.0370693,14.8418905 C37.6117228,14.6314143 37.3994455,14.3148905 37.3994455,13.8931286 C37.3994455,13.4454619 37.6053861,13.1224619 38.0180594,12.9249381 C38.4299406,12.7274143 38.9717228,12.6286524 39.6426139,12.6286524 C40.364198,12.6286524 41.1760792,12.8326524 42.0790495,13.2406524 C42.9812277,13.6494619 43.7416238,14.2485095 44.3610297,15.0394143 L50.0845941,9.07079524 C48.6667723,7.72698571 47.0232079,6.69889048 45.153901,5.98731905 C43.283802,5.27574762 41.4469703,4.92036667 39.6426139,4.92036667 C38.3016238,4.92036667 36.9479604,5.09198571 35.5816238,5.43603333 C34.214495,5.77927143 32.983604,6.3394619 31.8881584,7.11822381 C30.7919208,7.89779524 29.8960792,8.89431905 29.1998416,10.1077952 C28.503604,11.322081 28.1558812,12.801081 28.1558812,14.5431762 C28.1558812,15.7841762 28.3491485,16.8462714 28.7356832,17.731081 C29.1222178,18.615081 29.6449901,19.3744143 30.3024158,20.0074619 C30.9598416,20.641319 31.713901,21.1756048 32.5645941,21.6111286 C33.4152871,22.0474619 34.3047921,22.4238905 35.2331089,22.7404143 C36.1867723,23.0569381 36.9796436,23.3346048 37.6117228,23.5717952 C38.243802,23.8097952 38.7396436,24.0283667 39.1008317,24.2258905 C39.4620198,24.4234143 39.7131089,24.6144619 39.8548911,24.7990333 C39.9966733,24.9844143 40.0679604,25.2086524 40.0679604,25.4725571 C40.0679604,25.9736524 39.8548911,26.3177 39.4295446,26.5014619 C39.004198,26.6876524 38.533703,26.7791286 38.0180594,26.7791286 C36.8830099,26.7791286 35.7812277,26.5022714 34.7111287,25.9493667 C33.6410297,25.3956524 32.7832079,24.7634143 32.1392475,24.0518429 L26.5859802,30.2187952 C30.704,29.9945571 34.9946931,29.8755571 39.4034059,29.8755571 C42.213703,29.8755571 44.974099,29.9249381 47.674297,30.0180333 C47.923802,29.6634619 48.1558812,29.291081 48.3634059,28.8936048 C49.0208317,27.642081 49.3495446,26.1736048 49.3495446,24.4865571 C49.3495446,23.0375095 49.0533069,21.8256524 48.4600396,20.8501762 C47.8667723,19.8755095 47.1127129,19.0514143 46.1978614,18.3795095" id="Fill-3" fill="#260780"></path> <g id="Group-7" transform="translate(49.108911, 5.363095)"> <mask id="mask-2" fill="white"> <use xlink:href="#path-1"></use> </mask> <g id="Clip-6"></g> <path d="M12.2688317,17.0284952 L14.512,10.1111143 L16.7163564,17.0284952 L12.2688317,17.0284952 Z M21.3207129,5.01597143 C20.2466535,2.20125714 17.5939802,0.348257143 14.6379406,0.348257143 C11.6914059,0.348257143 9.04506931,2.18911429 7.96467327,4.99087619 L0.356752475,24.723019 C3.5749703,24.859019 6.69893069,25.0581619 9.70407921,25.3164 L10.3583366,23.329019 L18.451802,23.329019 L19.5314059,26.4246381 C23.3254653,26.963781 26.8272475,27.6057333 29.9702178,28.3334952 L30.2141782,28.3334952 L21.3207129,5.01597143 Z" id="Fill-5" fill="#260780" mask="url(#mask-2)"></path> </g> <g id="Group-10" transform="translate(72.079208, 0.505952)"> <mask id="mask-4" fill="white"> <use xlink:href="#path-3"></use> </mask> <g id="Clip-9"></g> <path d="M3.34938614,6.86354762 C5.12205941,6.86354762 6.55889109,5.39588095 6.55889109,3.58335714 C6.55889109,1.77245238 5.12205941,0.303166667 3.34938614,0.303166667 C1.57671287,0.303166667 0.139881188,1.77245238 0.139881188,3.58335714 C0.139881188,5.39588095 1.57671287,6.86354762 3.34938614,6.86354762" id="Fill-8" fill="#FF706F" mask="url(#mask-4)"></path> </g> </g> </g> </svg></a>
+    <button id="lang" class="ghost" type="button">DE</button>
   </div>
+  <div class="pill"><span class="dot"></span><span id="t_badge"></span></div>
 
   <section id="v_form">
     <h1 id="t_h1"></h1>
@@ -97,6 +114,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;paddi
     <div class="card"><b id="t_quick"></b><p id="quick" style="margin:6px 0 0"></p><a class="cta" id="cta" target="_blank" rel="noopener"></a></div>
     <p class="note" id="mailnote"></p>
     <p class="note" id="aihint"></p>
+    <button id="again" class="ghost" type="button"></button>
   </section>
 
   <section id="v_fail" class="hide">
@@ -104,6 +122,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;paddi
     <p class="sub" id="t_fail_p"></p>
     <button id="retry" class="ghost" type="button"></button>
   </section>
+  <footer class="foot"><span>Digital Space Agency · Hamburg</span><a href="https://www.digitalspaceagency.com" target="_blank" rel="noopener">digitalspaceagency.com</a></footer>
 </main>
 
 <script>
@@ -128,7 +147,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;paddi
       redo_h: 'Your website blocks automated visits', redo_p: 'Tell us in one line what your company does and our local AI writes a proper brief. We only email the better version.', redo_go: 'Redo my brief', redo_short: 'Please write a few more words.',
       on_device: 'Runs on the phone', why: 'Why', how: 'How',
       mail_sent: 'We also emailed it to ', mail_wait: 'It is also on its way to your inbox.', mail_failed: 'Email is delayed, we keep retrying. This page has the full brief.',
-      ai: 'AI generated from your public website. Please double check before relying on it.',
+      ai: 'AI generated from your public website. Please double check before relying on it.', again: 'Try another company',
       fail_h: 'That did not work', fail_p: 'Something went wrong on our side. Please try again, or ask us at the stand.', retry: 'Try again',
       e_name: 'Please enter your name.', e_email: 'Please check your email address.', e_website: 'Please check the website address, for example company.com.', e_consent: 'Please tick the consent box.',
       e_rate: 'Too many requests from this network. Please try again in a minute.', e_busy: 'We are very busy right now. Please try again in a minute.', e_net: 'No connection. Retrying…', e_generic: 'Could not submit. Please try again.',
@@ -148,7 +167,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;paddi
       redo_h: 'Ihre Website blockiert automatische Zugriffe', redo_p: 'Schreiben Sie in einer Zeile, was Ihr Unternehmen macht, und unsere lokale KI erstellt einen passenden Brief. Per E-Mail kommt nur die bessere Version.', redo_go: 'Brief neu erstellen', redo_short: 'Bitte ein paar Worte mehr.',
       on_device: 'Läuft auf dem Handy', why: 'Warum', how: 'Wie',
       mail_sent: 'Wir haben ihn auch gesendet an ', mail_wait: 'Er ist auch auf dem Weg in Ihr Postfach.', mail_failed: 'E-Mail verzögert sich, wir versuchen es weiter. Hier steht der komplette Brief.',
-      ai: 'KI-generiert aus Ihrer öffentlichen Website. Bitte vor Verwendung prüfen.',
+      ai: 'KI-generiert aus Ihrer öffentlichen Website. Bitte vor Verwendung prüfen.', again: 'Weitere Firma ausprobieren',
       fail_h: 'Das hat nicht geklappt', fail_p: 'Bei uns ist etwas schiefgelaufen. Bitte erneut versuchen oder uns am Stand ansprechen.', retry: 'Erneut versuchen',
       e_name: 'Bitte geben Sie Ihren Namen ein.', e_email: 'Bitte prüfen Sie Ihre E-Mail-Adresse.', e_website: 'Bitte prüfen Sie die Website, zum Beispiel firma.de.', e_consent: 'Bitte stimmen Sie der Einwilligung zu.',
       e_rate: 'Zu viele Anfragen aus diesem Netz. Bitte in einer Minute erneut versuchen.', e_busy: 'Gerade ist sehr viel los. Bitte in einer Minute erneut versuchen.', e_net: 'Keine Verbindung. Neuer Versuch…', e_generic: 'Senden fehlgeschlagen. Bitte erneut versuchen.',
@@ -166,7 +185,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;paddi
     Object.keys(map).forEach(function (id) { var el = $(id); if (el) el.textContent = tt(map[id]); });
     $('go').textContent = tt('go'); $('retry').textContent = tt('retry'); $('cta').textContent = tt('cta'); $('net').textContent = tt('net');
     $('t_wait_h').textContent = tt('wait_h') + (firstName || '');
-    $('aihint').textContent = tt('ai'); $('lang').textContent = lang === 'de' ? 'EN' : 'DE';
+    $('aihint').textContent = tt('ai'); $('again').textContent = tt('again'); $('lang').textContent = lang === 'de' ? 'EN' : 'DE';
     var p = $('t_priv'); p.href = (CFG.privacyUrl && !/^CHANGE_ME/.test(CFG.privacyUrl) ? CFG.privacyUrl : BASE + '/privacy') + '#' + lang;
     $('cta').href = CFG.bookingUrl || '#';
     buildSteps(window.__stage || 'queued');
@@ -192,8 +211,9 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;paddi
   function save(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
   function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   // The page runs in a sandboxed context (no localStorage), so the job id also lives in the URL hash.
-  function persistJob(id) { save('dsa_job', id); try { history.replaceState(null, '', id ? '#j=' + id : location.pathname + location.search); } catch (e) {} }
-  function loadJob() { var m = (location.hash || '').match(/j=([a-f0-9]{20})/); return m ? m[1] : load('dsa_job'); }
+  function persistJob(id) { save('dsa_job', id); save('dsa_job_at', id ? String(Date.now()) : null); try { history.replaceState(null, '', id ? '#j=' + id : location.pathname + location.search); } catch (e) {} }
+  // A link with #j= always resumes; reopening the page only resumes a brief from the last 30 minutes, otherwise a fresh form.
+  function loadJob() { var m = (location.hash || '').match(/j=([a-f0-9]{20})/); if (m) return m[1]; var at = Number(load('dsa_job_at') || 0); return at && Date.now() - at < 30 * 60 * 1000 ? load('dsa_job') : null; }
 
   function fetchJson(url, opts, timeoutMs) {
     var ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
@@ -305,6 +325,12 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;paddi
     }).catch(function () { $('redo_go').disabled = false; $('redo_err').textContent = tt('e_generic'); });
   });
   $('lang').addEventListener('click', function () { lang = lang === 'de' ? 'en' : 'de'; save('dsa_lang', lang); apply(); });
+  $('again').addEventListener('click', function () {   // new brief for another company: keep name + email, ask for website and consent again
+    clearTimeout(pollTimer); persistJob(null); jobId = null; lastPayload = null;
+    try { sessionStorage.removeItem('dsa_payload'); } catch (e) {}
+    $('website').value = ''; $('blurb').value = ''; $('consent').checked = false; $('err').textContent = ''; $('go').disabled = false;
+    show('form'); try { $('website').focus(); } catch (e) {}
+  });
   $('retry').addEventListener('click', function () { $('go').disabled = false; show('form'); });
   window.addEventListener('online', function () { if (jobId) schedule(100); });
   document.addEventListener('visibilitychange', function () { if (!document.hidden && jobId) schedule(100); });
