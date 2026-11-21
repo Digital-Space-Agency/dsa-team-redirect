@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Datenschutz / Privacy · AI brief</title>
+<style>
+body{margin:0;background:#f4f6fb;color:#0f172a;font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:20px 16px 48px}
+main{max-width:640px;margin:0 auto;background:#fff;border:1px solid #dbe2f2;border-radius:16px;padding:22px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:16px;margin:22px 0 6px}
+p,li{color:#334155}ul{padding-left:20px}
+.lang{display:flex;gap:8px;margin:0 0 14px}.lang a{border:1px solid #dbe2f2;border-radius:999px;padding:4px 12px;text-decoration:none;color:#0f172a}
+.hide{display:none}small{color:#64748b}
+</style>
+</head>
+<body>
+<main>
+  <div class="lang"><a href="#de" id="l_de">Deutsch</a><a href="#en" id="l_en">English</a></div>
+
+  <section id="de">
+    <h1>Datenschutzhinweise zum KI-Brief</h1>
+    <small>Gilt für das Formular an unserem Stand (AI Summit Hamburg).</small>
+    <h2>Verantwortlicher</h2>
+    <p>Digital Space Agency UG (haftungsbeschränkt), Hamburg, Germany. E-Mail: <a href="mailto:info@dsa.team">info@dsa.team</a></p>
+    <h2>Welche Daten</h2>
+    <ul><li>Name, E-Mail-Adresse, Website Ihres Unternehmens und, falls angegeben, Ihre Kurzbeschreibung</li>
+    <li>Zeitpunkt der Anfrage und IP-Adresse (zum Schutz vor Missbrauch)</li>
+    <li>der erzeugte Brief</li></ul>
+    <h2>Zweck und Rechtsgrundlage</h2>
+    <p>Wir lesen die öffentliche Website Ihres Unternehmens, erstellen daraus mit einem KI-Modell, das <b>lokal auf unserem Laptop</b> läuft, einen Brief und senden Ihnen diesen <b>einmalig</b> per E-Mail. Sie können auf diese E-Mail antworten, wir melden uns dann persönlich. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die Sie jederzeit mit Wirkung für die Zukunft per E-Mail an info@dsa.team widerrufen können.</p>
+    <h2>Empfänger</h2>
+    <p>Ihre Daten werden nicht an KI-Clouddienste übermittelt. Technische Dienstleister: unser E-Mail-Anbieter (Versand der E-Mail) und Cloudflare (verschlüsselte Weiterleitung der Formularanfrage an unseren Laptop). Eine interne Benachrichtigung mit Name, E-Mail und Brief geht über Telegram an uns.</p>
+    <h2>Speicherdauer</h2>
+    <p>Wir löschen Ihre Daten aus diesem System automatisch nach 30 Tagen. Antworten Sie auf die E-Mail, gilt für diese Korrespondenz die übliche geschäftliche Aufbewahrung.</p>
+    <h2>Ihre Rechte</h2>
+    <p>Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerruf: E-Mail an info@dsa.team. Beschwerden können Sie an eine Datenschutzaufsichtsbehörde richten, zum Beispiel den Hamburgischen Beauftragten für Datenschutz und Informationsfreiheit.</p>
+  </section>
+
+  <section id="en" class="hide">
+    <h1>Privacy notice for the AI brief</h1>
+    <small>Applies to the form at our stand (AI Summit Hamburg).</small>
+    <h2>Controller</h2>
+    <p>Digital Space Agency UG (haftungsbeschränkt), Hamburg, Germany. Email: <a href="mailto:info@dsa.team">info@dsa.team</a></p>
+    <h2>What data</h2>
+    <ul><li>Your name, email address, your company website and, if given, your one-line description</li>
+    <li>Time of the request and IP address (to prevent abuse)</li>
+    <li>the generated brief</li></ul>
+    <h2>Purpose and legal basis</h2>
+    <p>We read your company's public website, write a brief with an AI model that runs <b>locally on our laptop</b>, and email it to you <b>once</b>. You can reply to that email and we will get back to you personally. The legal basis is your consent (Art. 6(1)(a) GDPR), which you can withdraw at any time for the future by emailing info@dsa.team.</p>
+    <h2>Recipients</h2>
+    <p>Your data is not sent to any AI cloud service. Technical providers: our email provider (sending the email) and Cloudflare (encrypted forwarding of the form request to our laptop). An internal notification with your name, email and brief is sent to us via Telegram.</p>
+    <h2>Retention</h2>
+    <p>Your data is deleted from this system automatically after 30 days. If you reply to the email, normal business record keeping applies to that correspondence.</p>
+    <h2>Your rights</h2>
+    <p>Access, rectification, erasure, restriction, portability and withdrawal of consent: email info@dsa.team. You can also complain to a data protection authority, for example the Hamburg Commissioner for Data Protection and Freedom of Information.</p>
+  </section>
+</main>
+<script>
+(function () {
+  function show(l) { document.getElementById('de').classList.toggle('hide', l !== 'de'); document.getElementById('en').classList.toggle('hide', l !== 'en'); document.documentElement.lang = l; }
+  var l = (location.hash || '').slice(1) || ((navigator.language || '').slice(0, 2) === 'de' ? 'de' : 'en');
+  show(l === 'en' ? 'en' : 'de');
+  window.addEventListener('hashchange', function () { show(location.hash === '#en' ? 'en' : 'de'); });
+})();
+</script>
+</body>
+</html>
