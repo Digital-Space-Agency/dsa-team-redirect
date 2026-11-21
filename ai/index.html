@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>AI opportunity brief</title>
+<style>
+:root{--bg:#0b1020;--card:#141b34;--ink:#eef2ff;--mut:#9aa6c9;--acc:#6ee7b7;--acc2:#38bdf8;--bad:#fca5a5;--line:#26305a}
+@media (prefers-color-scheme:light){:root{--bg:#f4f6fb;--card:#fff;--ink:#0f172a;--mut:#53607f;--acc:#047857;--acc2:#0369a1;--bad:#b91c1c;--line:#dbe2f2}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;padding:env(safe-area-inset-top) 16px 40px}
+main{max-width:520px;margin:0 auto;padding-top:18px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--mut);font-size:13px}
+.pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 10px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--acc)}
+h1{font-size:26px;line-height:1.15;margin:18px 0 6px}
+p.sub{margin:0 0 18px;color:var(--mut)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 6px}
+label small{font-weight:400;color:var(--mut)}
+input[type=text],input[type=email],textarea{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit}
+input:focus,textarea:focus{outline:2px solid var(--acc2);outline-offset:1px}
+textarea{min-height:70px;resize:vertical}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.chk{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:13px;color:var(--mut)}
+.chk input{margin-top:3px;width:20px;height:20px;flex:none}
+.chk a{color:var(--acc2)}
+button{width:100%;margin-top:16px;padding:15px;border:0;border-radius:12px;font:inherit;font-weight:700;color:#04210f;background:linear-gradient(90deg,var(--acc),var(--acc2));cursor:pointer}
+button[disabled]{opacity:.55}
+button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);font-weight:600}
+.err{color:var(--bad);font-size:14px;margin-top:10px;min-height:1.2em}
+.banner{display:none;margin:10px 0;padding:10px 12px;border-radius:12px;background:#f59e0b22;border:1px solid #f59e0b66;font-size:14px}
+.steps{list-style:none;margin:6px 0 0;padding:0}
+.steps li{display:flex;gap:12px;align-items:center;padding:10px 0;color:var(--mut)}
+.steps li .b{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;flex:none}
+.steps li.on{color:var(--ink);font-weight:600}
+.steps li.on .b{border-color:var(--acc2);animation:pulse 1.2s infinite}
+.steps li.ok .b{background:var(--acc);border-color:var(--acc);color:#04210f}
+@keyframes pulse{50%{box-shadow:0 0 0 6px #38bdf833}}
+.opp{padding:12px 0;border-top:1px solid var(--line)}
+.opp:first-of-type{border-top:0}
+.opp h3{margin:0 0 4px;font-size:16px}
+.opp p{margin:4px 0;color:var(--mut);font-size:14px}
+.opp b{color:var(--ink)}
+.tag{font-size:11px;font-weight:700;background:#0ea5e922;color:var(--acc2);border-radius:8px;padding:2px 7px;margin-left:6px;white-space:nowrap}
+.note{font-size:13px;color:var(--mut)}
+.warn{background:#f59e0b22;border:1px solid #f59e0b66;border-radius:12px;padding:10px 12px;font-size:14px;margin-bottom:12px}
+a.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;padding:14px;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:700}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <div class="top">
+    <span class="pill"><span class="dot"></span><span id="t_badge"></span></span>
+    <button id="lang" class="ghost" style="width:auto;margin:0;padding:6px 12px" type="button">DE</button>
+  </div>
+
+  <section id="v_form">
+    <h1 id="t_h1"></h1>
+    <p class="sub" id="t_sub"></p>
+    <form class="card" id="f" novalidate autocomplete="on">
+      <label for="name" id="t_name"></label>
+      <input id="name" name="name" type="text" autocomplete="name" autocapitalize="words" maxlength="60" required>
+      <label for="email" id="t_email"></label>
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" maxlength="254" required>
+      <label for="website" id="t_web"></label>
+      <input id="website" name="website" type="text" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" maxlength="300" placeholder="company.com" required>
+      <label for="blurb"><span id="t_blurb"></span> <small id="t_opt"></small></label>
+      <textarea id="blurb" name="blurb" maxlength="300"></textarea>
+      <input class="hp" id="hp" name="company_fax" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="chk"><input id="consent" type="checkbox"><label for="consent" style="font-weight:400;margin:0"><span id="t_consent"></span> <a id="t_priv" target="_blank" rel="noopener"></a></label></div>
+      <div class="err" id="err" role="alert"></div>
+      <button id="go" type="submit"></button>
+    </form>
+    <p class="note" id="t_local"></p>
+  </section>
+
+  <section id="v_wait" class="hide">
+    <h1 id="t_wait_h"></h1>
+    <p class="sub" id="t_wait_sub"></p>
+    <div class="banner" id="net"></div>
+    <div class="card">
+      <ul class="steps" id="steps"></ul>
+      <p class="note" id="queue"></p>
+    </div>
+  </section>
+
+  <section id="v_done" class="hide">
+    <h1 id="t_done_h"></h1>
+    <div class="warn hide" id="generic"></div>
+    <div class="card hide" id="redo"><b id="t_redo_h"></b><p class="note" id="t_redo_p" style="margin:6px 0 8px"></p>
+      <textarea id="redo_blurb" maxlength="300"></textarea><div class="err" id="redo_err"></div><button id="redo_go" type="button"></button></div>
+    <div class="card"><div id="summary"></div></div>
+    <div class="card"><div id="opps"></div></div>
+    <div class="card"><b id="t_quick"></b><p id="quick" style="margin:6px 0 0"></p><a class="cta" id="cta" target="_blank" rel="noopener"></a></div>
+    <p class="note" id="mailnote"></p>
+    <p class="note" id="aihint"></p>
+  </section>
+
+  <section id="v_fail" class="hide">
+    <h1 id="t_fail_h"></h1>
+    <p class="sub" id="t_fail_p"></p>
+    <button id="retry" class="ghost" type="button"></button>
+  </section>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var CFG = {"company":"Digital Space Agency","event":"AI Summit Hamburg","ownerName":"Dave","bookingUrl":"https://calendar.app.google/vCi9GMTTyLDyENtw8","privacyUrl":"https://dsa.team/ai/privacy.html","retentionDays":30,"publicBaseUrl":"https://ai.hushdo.app","model":"gemma4:e4b","avgJobSeconds":11,"publicFormUrl":"https://dsa.team/ai/","apiBase":"https://ai.hushdo.app/webhook/dsa","screenShowTitles":true,"screenShowUrl":false,"wifi":{"ssid":"","password":""}};
+  // Served by n8n: same-origin relative paths. Served from the website (dsa.team/ai): CFG.apiBase points at the tunnel.
+  var BASE = CFG.apiBase || location.pathname.replace(/\/form\/?$/, '');
+  var T = {
+    en: {
+      badge: 'AI runs on a laptop at our stand. No cloud AI.', h1: 'Get a free AI brief about your company',
+      sub: 'Our local AI reads your website and lists where AI and automation could help. Takes about a minute, and it lands in your inbox too.',
+      name: 'Your name', email: 'Work email', web: 'Company website', blurb: 'One line about what your company does', opt: '(optional, helps a lot if your site is thin)',
+      consent: 'I agree that ' + (CFG.company || '') + ' stores my details and emails me this one brief. Kept for ' + (CFG.retentionDays || 30) + ' days.', priv: 'Privacy',
+      go: 'Create my brief', local: 'Your website is read by our server and analysed by a model running on our laptop. Nothing is sent to an AI cloud.',
+      wait_h: 'Hang tight, ', wait_sub: 'Please keep this page open. If you close it, the brief still arrives by email.',
+      s_queued: 'Waiting in line', s_fetching: 'Reading your website', s_thinking: 'Local AI is thinking', s_done: 'Brief ready',
+      pos: function (n, s) { return 'You are number ' + n + ' in line, about ' + s + ' seconds.'; }, working: 'You are up now.',
+      net: 'Weak connection. Retrying, your brief is safe.',
+      done_h: 'Your AI opportunity brief', quick: 'A quick win to try first', cta: 'Book 20 minutes with us',
+      generic: 'We could not read your site in time, so this is a general version. We will follow up personally.',
+      redo_h: 'Your website blocks automated visits', redo_p: 'Tell us in one line what your company does and our local AI writes a proper brief. We only email the better version.', redo_go: 'Redo my brief', redo_short: 'Please write a few more words.',
+      on_device: 'Runs on the phone', why: 'Why', how: 'How',
+      mail_sent: 'We also emailed it to ', mail_wait: 'It is also on its way to your inbox.', mail_failed: 'Email is delayed, we keep retrying. This page has the full brief.',
+      ai: 'AI generated from your public website. Please double check before relying on it.',
+      fail_h: 'That did not work', fail_p: 'Something went wrong on our side. Please try again, or ask us at the stand.', retry: 'Try again',
+      e_name: 'Please enter your name.', e_email: 'Please check your email address.', e_website: 'Please check the website address, for example company.com.', e_consent: 'Please tick the consent box.',
+      e_rate: 'Too many requests from this network. Please try again in a minute.', e_busy: 'We are very busy right now. Please try again in a minute.', e_net: 'No connection. Retrying…', e_generic: 'Could not submit. Please try again.',
+    },
+    de: {
+      badge: 'KI läuft auf einem Laptop an unserem Stand. Keine Cloud-KI.', h1: 'Ihr kostenloser KI-Brief zu Ihrem Unternehmen',
+      sub: 'Unsere lokale KI liest Ihre Website und zeigt, wo KI und Automatisierung helfen können. Dauert etwa eine Minute, und der Brief kommt auch per E-Mail.',
+      name: 'Ihr Name', email: 'Geschäftliche E-Mail', web: 'Website Ihres Unternehmens', blurb: 'Eine Zeile dazu, was Ihr Unternehmen macht', opt: '(optional, hilft bei dünnen Websites)',
+      consent: 'Ich bin einverstanden, dass ' + (CFG.company || '') + ' meine Daten speichert und mir diesen einen Brief per E-Mail sendet. Speicherdauer ' + (CFG.retentionDays || 30) + ' Tage.', priv: 'Datenschutz',
+      go: 'Meinen Brief erstellen', local: 'Ihre Website wird von unserem Server gelesen und von einem Modell auf unserem Laptop analysiert. Nichts geht an eine KI-Cloud.',
+      wait_h: 'Einen Moment, ', wait_sub: 'Bitte lassen Sie diese Seite offen. Schließen Sie sie, kommt der Brief trotzdem per E-Mail.',
+      s_queued: 'In der Warteschlange', s_fetching: 'Website wird gelesen', s_thinking: 'Lokale KI denkt nach', s_done: 'Brief fertig',
+      pos: function (n, s) { return 'Sie sind Nummer ' + n + ' in der Schlange, etwa ' + s + ' Sekunden.'; }, working: 'Sie sind jetzt dran.',
+      net: 'Schwache Verbindung. Wir versuchen es weiter, Ihr Brief ist sicher.',
+      done_h: 'Ihr KI-Potenzialbrief', quick: 'Ein Quick Win für den Anfang', cta: '20 Minuten mit uns buchen',
+      generic: 'Wir konnten Ihre Seite nicht rechtzeitig lesen, daher ist dies eine allgemeine Version. Wir melden uns persönlich.',
+      redo_h: 'Ihre Website blockiert automatische Zugriffe', redo_p: 'Schreiben Sie in einer Zeile, was Ihr Unternehmen macht, und unsere lokale KI erstellt einen passenden Brief. Per E-Mail kommt nur die bessere Version.', redo_go: 'Brief neu erstellen', redo_short: 'Bitte ein paar Worte mehr.',
+      on_device: 'Läuft auf dem Handy', why: 'Warum', how: 'Wie',
+      mail_sent: 'Wir haben ihn auch gesendet an ', mail_wait: 'Er ist auch auf dem Weg in Ihr Postfach.', mail_failed: 'E-Mail verzögert sich, wir versuchen es weiter. Hier steht der komplette Brief.',
+      ai: 'KI-generiert aus Ihrer öffentlichen Website. Bitte vor Verwendung prüfen.',
+      fail_h: 'Das hat nicht geklappt', fail_p: 'Bei uns ist etwas schiefgelaufen. Bitte erneut versuchen oder uns am Stand ansprechen.', retry: 'Erneut versuchen',
+      e_name: 'Bitte geben Sie Ihren Namen ein.', e_email: 'Bitte prüfen Sie Ihre E-Mail-Adresse.', e_website: 'Bitte prüfen Sie die Website, zum Beispiel firma.de.', e_consent: 'Bitte stimmen Sie der Einwilligung zu.',
+      e_rate: 'Zu viele Anfragen aus diesem Netz. Bitte in einer Minute erneut versuchen.', e_busy: 'Gerade ist sehr viel los. Bitte in einer Minute erneut versuchen.', e_net: 'Keine Verbindung. Neuer Versuch…', e_generic: 'Senden fehlgeschlagen. Bitte erneut versuchen.',
+    },
+  };
+  var lang = (function () { try { var s = localStorage.getItem('dsa_lang'); if (s) return s; } catch (e) {} return (navigator.language || 'en').slice(0, 2) === 'de' ? 'de' : 'en'; })();
+  var $ = function (id) { return document.getElementById(id); };
+  var lastPayload = (function () { try { return JSON.parse(sessionStorage.getItem('dsa_payload') || 'null'); } catch (e) { return null; } })();
+  var jobId = null, pollTimer = null, failStreak = 0, lastView = 'form', firstName = '';
+
+  function tt(k) { return T[lang][k]; }
+  function apply() {
+    document.documentElement.lang = lang;
+    var map = { t_badge: 'badge', t_h1: 'h1', t_sub: 'sub', t_name: 'name', t_email: 'email', t_web: 'web', t_blurb: 'blurb', t_opt: 'opt', t_consent: 'consent', t_priv: 'priv', t_local: 'local', t_quick: 'quick', t_done_h: 'done_h', t_fail_h: 'fail_h', t_fail_p: 'fail_p', t_wait_sub: 'wait_sub' };
+    Object.keys(map).forEach(function (id) { var el = $(id); if (el) el.textContent = tt(map[id]); });
+    $('go').textContent = tt('go'); $('retry').textContent = tt('retry'); $('cta').textContent = tt('cta'); $('net').textContent = tt('net');
+    $('t_wait_h').textContent = tt('wait_h') + (firstName || '');
+    $('aihint').textContent = tt('ai'); $('lang').textContent = lang === 'de' ? 'EN' : 'DE';
+    var p = $('t_priv'); p.href = (CFG.privacyUrl && !/^CHANGE_ME/.test(CFG.privacyUrl) ? CFG.privacyUrl : BASE + '/privacy') + '#' + lang;
+    $('cta').href = CFG.bookingUrl || '#';
+    buildSteps(window.__stage || 'queued');
+  }
+  function show(v) {
+    lastView = v;
+    ['form', 'wait', 'done', 'fail'].forEach(function (x) { $('v_' + x).classList.toggle('hide', x !== v); });
+    window.scrollTo(0, 0);
+  }
+  var ORDER = ['queued', 'fetching', 'thinking', 'done'];
+  function buildSteps(stage) {
+    window.__stage = stage;
+    var ul = $('steps'); ul.textContent = '';
+    var idx = Math.max(0, ORDER.indexOf(stage));
+    ORDER.forEach(function (s, i) {
+      var li = document.createElement('li');
+      li.className = i < idx || stage === 'done' ? 'ok' : (i === idx ? 'on' : '');
+      var b = document.createElement('span'); b.className = 'b'; b.textContent = (i < idx || stage === 'done') ? '✓' : String(i + 1);
+      var tx = document.createElement('span'); tx.textContent = tt('s_' + s);
+      li.appendChild(b); li.appendChild(tx); ul.appendChild(li);
+    });
+  }
+  function save(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  // The page runs in a sandboxed context (no localStorage), so the job id also lives in the URL hash.
+  function persistJob(id) { save('dsa_job', id); try { history.replaceState(null, '', id ? '#j=' + id : location.pathname + location.search); } catch (e) {} }
+  function loadJob() { var m = (location.hash || '').match(/j=([a-f0-9]{20})/); return m ? m[1] : load('dsa_job'); }
+
+  function fetchJson(url, opts, timeoutMs) {
+    var ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var to = setTimeout(function () { if (ctl) ctl.abort(); }, timeoutMs || 12000);
+    opts = opts || {}; if (ctl) opts.signal = ctl.signal; opts.cache = 'no-store';
+    return fetch(url, opts).then(function (r) {
+      clearTimeout(to);
+      return r.text().then(function (txt) { var j = null; try { j = JSON.parse(txt); } catch (e) {} return { status: r.status, json: j }; });
+    }, function (e) { clearTimeout(to); throw e; });
+  }
+
+  function submit(payload, attempt) {
+    attempt = attempt || 0;
+    return fetchJson(BASE + '/submit', { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: JSON.stringify(payload) }, 15000).then(function (r) {
+      if (r.status === 202 || r.status === 200) { if (r.json && r.json.jobId) return r.json; throw new Error('bad-response'); }
+      if (r.status === 400 && r.json && r.json.code) { var e = new Error('input'); e.code = r.json.code; throw e; }
+      if (r.status === 429) { var e2 = new Error('rate'); e2.code = 'rate'; throw e2; }
+      if (r.status === 503 && r.json && r.json.code === 'busy') { var e3 = new Error('busy'); e3.code = 'busy'; throw e3; }
+      throw new Error('http' + r.status);
+    }).catch(function (e) {
+      if (e.code) throw e;
+      if (attempt >= 4) throw e;
+      $('err').textContent = tt('e_net');
+      return new Promise(function (res) { setTimeout(res, 1500 * Math.pow(1.7, attempt)); }).then(function () { return submit(payload, attempt + 1); });
+    });
+  }
+
+  function poll() {
+    clearTimeout(pollTimer);
+    if (!jobId) return;
+    fetchJson(BASE + '/status?id=' + encodeURIComponent(jobId), {}, 10000).then(function (r) {
+      failStreak = 0; $('net').style.display = 'none';
+      if (r.status === 404 || !r.json || !r.json.ok) { if (r.status === 404) { persistJob(null); jobId = null; show('fail'); return; } throw new Error('bad'); }
+      var s = r.json;
+      if (s.status === 'duplicate' && s.dupOf) { jobId = s.dupOf; persistJob(jobId); return schedule(300); }
+      if (s.firstName && !firstName) { firstName = s.firstName; apply(); }
+      if (s.status === 'done') { renderDone(s); return; }
+      show('wait');
+      buildSteps(s.status === 'queued' ? 'queued' : (s.stage || 'fetching'));
+      $('queue').textContent = s.status === 'queued' ? tt('pos')(s.position || 1, s.etaSec || 20) : tt('working');
+      schedule(2000);
+    }).catch(function () {
+      failStreak++;
+      if (failStreak >= 2) $('net').style.display = 'block';
+      schedule(Math.min(10000, 1500 * Math.pow(1.4, failStreak)));
+    });
+  }
+  function schedule(ms) { clearTimeout(pollTimer); pollTimer = setTimeout(poll, ms); }
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function renderDone(s) {
+    var b = s.brief || {};
+    $('summary').textContent = ''; $('opps').textContent = '';
+    $('summary').appendChild(el('p', null, b.company_summary || ''));
+    (b.opportunities || []).forEach(function (o, i) {
+      var d = el('div', 'opp'); var h = el('h3', null, (i + 1) + '. ' + (o.title || ''));
+      if (o.on_device) h.appendChild(el('span', 'tag', tt('on_device')));
+      d.appendChild(h);
+      var p1 = el('p'); p1.appendChild(el('b', null, tt('why') + ': ')); p1.appendChild(document.createTextNode(o.why || '')); d.appendChild(p1);
+      if (o.how) { var p2 = el('p'); p2.appendChild(el('b', null, tt('how') + ': ')); p2.appendChild(document.createTextNode(o.how)); d.appendChild(p2); }
+      $('opps').appendChild(d);
+    });
+    $('quick').textContent = b.quick_win || '';
+    $('generic').textContent = tt('generic'); $('generic').classList.toggle('hide', !(b.generic || s.mode === 'fallback') || !!s.canRedo);
+    $('t_redo_h').textContent = tt('redo_h'); $('t_redo_p').textContent = tt('redo_p'); $('redo_go').textContent = tt('redo_go');
+    $('redo').classList.toggle('hide', !(s.canRedo && lastPayload));
+    var m = s.emailStatus;
+    $('mailnote').textContent = m === 'sent' ? tt('mail_sent') + ($('email').value || '') : (m === 'failed' || m === 'gave-up' ? tt('mail_failed') : tt('mail_wait'));
+    show('done');
+    if (m !== 'sent' && m !== 'gave-up') { /* refresh the mail line once more later */ setTimeout(function () { if (!jobId) return; fetchJson(BASE + '/status?id=' + encodeURIComponent(jobId), {}, 8000).then(function (r) { if (r.json && r.json.ok && r.json.emailStatus === 'sent') $('mailnote').textContent = tt('mail_sent') + ($('email').value || ''); }, function () {}); }, 12000); }
+  }
+
+  function validate() {
+    var name = $('name').value.trim(), email = $('email').value.trim(), web = $('website').value.trim();
+    if (name.length < 2) return 'e_name';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return 'e_email';
+    if (!/^(https?:\/\/)?[^\s\/]+\.[^\s\/.]{2,}(\/.*)?$/i.test(web)) return 'e_website';
+    if (!$('consent').checked) return 'e_consent';
+    return '';
+  }
+  $('f').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var bad = validate(); $('err').textContent = bad ? tt(bad) : '';
+    if (bad) return;
+    $('go').disabled = true; firstName = $('name').value.trim().split(/\s+/)[0] || '';
+    var payload = { name: $('name').value, email: $('email').value, website: $('website').value, blurb: $('blurb').value, consent: true, hp: $('hp').value, lang: lang };
+    lastPayload = payload; try { sessionStorage.setItem('dsa_payload', JSON.stringify(payload)); } catch (e) {}
+    submit(payload).then(function (j) {
+      jobId = j.jobId; persistJob(jobId); save('dsa_email', $('email').value);
+      apply(); show('wait'); buildSteps('queued');
+      $('queue').textContent = tt('pos')(j.position || 1, j.etaSec || 20);
+      schedule(800);
+    }).catch(function (e) {
+      $('go').disabled = false;
+      var map = { name: 'e_name', email: 'e_email', website: 'e_website', consent: 'e_consent', rate: 'e_rate', busy: 'e_busy' };
+      var k = e && e.code && map[e.code] ? map[e.code] : 'e_generic';
+      $('err').textContent = tt(k);
+    });
+  });
+  $('redo_go').addEventListener('click', function () {
+    var t = $('redo_blurb').value.trim();
+    if (t.length < 10) { $('redo_err').textContent = tt('redo_short'); return; }
+    if (!lastPayload) return;
+    $('redo_go').disabled = true; $('redo_err').textContent = '';
+    var p = Object.assign({}, lastPayload, { blurb: t, lang: lang });
+    submit(p).then(function (j) {
+      jobId = j.jobId; persistJob(jobId); show('wait'); buildSteps('queued');
+      $('queue').textContent = tt('pos')(j.position || 1, j.etaSec || 20); schedule(800); $('redo_go').disabled = false;
+    }).catch(function () { $('redo_go').disabled = false; $('redo_err').textContent = tt('e_generic'); });
+  });
+  $('lang').addEventListener('click', function () { lang = lang === 'de' ? 'en' : 'de'; save('dsa_lang', lang); apply(); });
+  $('retry').addEventListener('click', function () { $('go').disabled = false; show('form'); });
+  window.addEventListener('online', function () { if (jobId) schedule(100); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && jobId) schedule(100); });
+
+  apply();
+  var saved = loadJob(); var em = load('dsa_email');
+  if (em) $('email').value = em;
+  if (saved && /^[a-f0-9]{20}$/.test(saved)) { jobId = saved; show('wait'); buildSteps('queued'); schedule(100); } else { show('form'); }
+})();
+</script>
+</body>
+</html>
