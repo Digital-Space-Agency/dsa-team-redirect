@@ -109,7 +109,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;paddi
 <script>
 (function () {
   'use strict';
-  var CFG = {"company":"Digital Space Agency","event":"AI Summit Hamburg","ownerName":"Dave","bookingUrl":"https://calendar.app.google/vCi9GMTTyLDyENtw8","privacyUrl":"https://dsa.team/ai/privacy.html","retentionDays":30,"publicBaseUrl":"https://ai.hushdo.app","model":"gemma4:e4b","avgJobSeconds":11,"publicFormUrl":"https://dsa.team/ai/","apiBase":"https://ai.hushdo.app/webhook/dsa","screenShowTitles":true,"screenShowUrl":false,"wifi":{"ssid":"","password":""}};
+  var CFG = {"company":"Digital Space Agency","event":"AI Summit Hamburg","bookingUrl":"https://calendar.app.google/vCi9GMTTyLDyENtw8","privacyUrl":"https://dsa.team/ai/privacy.html","retentionDays":30,"publicBaseUrl":"https://ai.hushdo.app","model":"gemma4:e4b","avgJobSeconds":11,"publicFormUrl":"https://dsa.team/ai/","apiBase":"https://ai.hushdo.app/webhook/dsa","screenShowTitles":true,"screenShowUrl":false,"wifi":{"ssid":"","password":""}};
   // Served by n8n: same-origin relative paths. Served from the website (dsa.team/ai): CFG.apiBase points at the tunnel.
   var BASE = CFG.apiBase || location.pathname.replace(/\/form\/?$/, '');
   var T = {
@@ -123,7 +123,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;paddi
       s_queued: 'Waiting in line', s_fetching: 'Reading your website', s_thinking: 'Local AI is thinking', s_done: 'Brief ready',
       pos: function (n, s) { return 'You are number ' + n + ' in line, about ' + s + ' seconds.'; }, working: 'You are up now.',
       net: 'Weak connection. Retrying, your brief is safe.',
-      done_h: 'Your AI opportunity brief', quick: 'A quick win to try first', cta: 'Book 20 minutes with us',
+      done_h: 'Your AI opportunity brief', quick: 'A quick win to try first', cta: 'Book a 15-minute discovery call',
       generic: 'We could not read your site in time, so this is a general version. We will follow up personally.',
       redo_h: 'Your website blocks automated visits', redo_p: 'Tell us in one line what your company does and our local AI writes a proper brief. We only email the better version.', redo_go: 'Redo my brief', redo_short: 'Please write a few more words.',
       on_device: 'Runs on the phone', why: 'Why', how: 'How',
@@ -143,7 +143,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:14px;paddi
       s_queued: 'In der Warteschlange', s_fetching: 'Website wird gelesen', s_thinking: 'Lokale KI denkt nach', s_done: 'Brief fertig',
       pos: function (n, s) { return 'Sie sind Nummer ' + n + ' in der Schlange, etwa ' + s + ' Sekunden.'; }, working: 'Sie sind jetzt dran.',
       net: 'Schwache Verbindung. Wir versuchen es weiter, Ihr Brief ist sicher.',
-      done_h: 'Ihr KI-Potenzialbrief', quick: 'Ein Quick Win für den Anfang', cta: '20 Minuten mit uns buchen',
+      done_h: 'Ihr KI-Potenzialbrief', quick: 'Ein Quick Win für den Anfang', cta: '15-Minuten-Kennenlerngespräch buchen',
       generic: 'Wir konnten Ihre Seite nicht rechtzeitig lesen, daher ist dies eine allgemeine Version. Wir melden uns persönlich.',
       redo_h: 'Ihre Website blockiert automatische Zugriffe', redo_p: 'Schreiben Sie in einer Zeile, was Ihr Unternehmen macht, und unsere lokale KI erstellt einen passenden Brief. Per E-Mail kommt nur die bessere Version.', redo_go: 'Brief neu erstellen', redo_short: 'Bitte ein paar Worte mehr.',
       on_device: 'Läuft auf dem Handy', why: 'Warum', how: 'Wie',
