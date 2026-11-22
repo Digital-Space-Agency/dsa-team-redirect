@@ -56,6 +56,7 @@ button.ghost{background:transparent;color:var(--text);border:2px solid var(--lav
 .opp h3{margin:0 0 4px;font-size:17px;line-height:1.3}
 .opp p{margin:4px 0;color:var(--muted);font-size:14.5px}
 .opp b{color:var(--text)}
+.tags{margin:4px 0 6px;display:flex;flex-wrap:wrap;gap:6px}.tags .tag{margin-left:0;text-transform:none;letter-spacing:.02em}
 .tag{display:inline-block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--sec);border:1px solid rgba(255,112,111,.45);border-radius:999px;padding:1px 8px;margin-left:8px;vertical-align:2px;white-space:nowrap}
 .note{font-size:13.5px;color:var(--muted)}
 .warn{background:rgba(255,112,111,.1);border:1px solid rgba(255,112,111,.4);border-radius:14px;padding:12px 14px;font-size:14px;margin-bottom:14px}
@@ -84,8 +85,9 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
       <input id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" maxlength="254" required>
       <label for="website" id="t_web"></label>
       <input id="website" name="website" type="text" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" maxlength="300" placeholder="company.com" required>
-      <label for="blurb"><span id="t_blurb"></span> <small id="t_opt"></small></label>
-      <textarea id="blurb" name="blurb" maxlength="300"></textarea>
+      <label for="task"><span id="t_task"></span> <small id="t_opt"></small></label>
+      <textarea id="task" name="task" maxlength="200" rows="2"></textarea>
+      <p class="note" id="t_mic" style="margin:4px 0 0"></p>
       <input class="hp" id="hp" name="company_fax" tabindex="-1" autocomplete="off" aria-hidden="true">
       <div class="chk"><input id="consent" type="checkbox"><label for="consent" style="font-weight:400;margin:0"><span id="t_consent"></span> <a id="t_priv" target="_blank" rel="noopener"></a></label></div>
       <div class="chk"><input id="contact" type="checkbox"><label for="contact" style="font-weight:400;margin:0"><span id="t_contact"></span></label></div>
@@ -136,7 +138,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
     en: {
       badge: 'AI runs on a laptop at our stand. No cloud AI.', h1: 'Get a free AI brief about your company',
       sub: 'Our local AI reads your website and lists where AI and automation could help. Takes about a minute, and it lands in your inbox too.',
-      name: 'Your name', email: 'Work email', web: 'Company website', blurb: 'One line about what your company does', opt: '(optional, helps a lot if your site is thin)',
+      name: 'Your name', email: 'Work email', web: 'Company website', task: 'Which task would you love to never do again?', opt: '(optional, makes your brief much more specific)', task_ph: 'e.g. copying order emails into our ERP', mic: 'Tip: tap the microphone key on your keyboard and just say it.',
       consent: 'I agree that ' + (CFG.company || '') + ' stores my details and emails me this one brief. Kept for ' + (CFG.retentionDays || 30) + ' days.', priv: 'Privacy',
       contact: 'Optional: you may contact me about my brief afterwards.',
       go: 'Create my brief', local: 'Your website is read by our server and analysed by a model running on our laptop. Nothing is sent to an AI cloud.',
@@ -144,12 +146,14 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
       s_queued: 'Waiting in line', s_fetching: 'Reading your website', s_thinking: 'Local AI is thinking', s_done: 'Brief ready',
       pos: function (n, s) { return 'You are number ' + n + ' in line, about ' + s + ' seconds.'; }, working: 'You are up now.',
       net: 'Weak connection. Retrying, your brief is safe.',
-      done_h: 'Your AI opportunity brief', quick: 'A quick win to try first', cta: 'Book a 15-minute discovery call',
+      done_h: 'Your AI opportunity brief', quick: 'A 2-week pilot we could build with you', cta: 'Book a 15-minute discovery call',
       generic: 'We could not read your site in time, so this is a general version. We will follow up personally.',
+      wiki: 'Your website blocks automated visits, so this brief is based on your public Wikipedia entry.',
       redo_h: 'Your website blocks automated visits', redo_p: 'Tell us in one line what your company does and our local AI writes a proper brief. We only email the better version.', redo_go: 'Redo my brief', redo_short: 'Please write a few more words.',
-      on_device: 'Runs on the phone', why: 'Why', how: 'How',
+      why: 'Today', how: 'Automated', ai_why: 'Why this AI', your_task: 'You said you would love to stop: ',
+      d_phone: 'Phone', d_laptop: 'Laptop', d_both: 'Phone + laptop', a_on: 'On-device AI', a_cloud: 'Cloud AI', a_hybrid: 'On-device + cloud AI',
       mail_sent: 'We also emailed it to ', mail_wait: 'It is also on its way to your inbox.', mail_failed: 'Email is delayed, we keep retrying. This page has the full brief.',
-      ai: 'AI generated from your public website. Please double check before relying on it.', again: 'Try another company',
+      ai: 'Written by AI from public information about your company. Please check it before you rely on it.', again: 'Try another company',
       fail_h: 'That did not work', fail_p: 'Something went wrong on our side. Please try again, or ask us at the stand.', retry: 'Try again',
       e_name: 'Please enter your name.', e_email: 'Please check your email address.', e_website: 'Please check the website address, for example company.com.', e_consent: 'Please tick the consent box.',
       e_rate: 'Too many requests from this network. Please try again in a minute.', e_busy: 'We are very busy right now. Please try again in a minute.', e_net: 'No connection. Retrying…', e_generic: 'Could not submit. Please try again.',
@@ -157,7 +161,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
     de: {
       badge: 'KI läuft auf einem Laptop an unserem Stand. Keine Cloud-KI.', h1: 'Ihr kostenloser KI-Brief zu Ihrem Unternehmen',
       sub: 'Unsere lokale KI liest Ihre Website und zeigt, wo KI und Automatisierung helfen können. Dauert etwa eine Minute, und der Brief kommt auch per E-Mail.',
-      name: 'Ihr Name', email: 'Geschäftliche E-Mail', web: 'Website Ihres Unternehmens', blurb: 'Eine Zeile dazu, was Ihr Unternehmen macht', opt: '(optional, hilft bei dünnen Websites)',
+      name: 'Ihr Name', email: 'Geschäftliche E-Mail', web: 'Website Ihres Unternehmens', task: 'Welche Aufgabe würden Sie am liebsten nie wieder erledigen?', opt: '(optional, macht Ihren Brief viel konkreter)', task_ph: 'z. B. Bestell-E-Mails von Hand ins ERP übertragen', mic: 'Tipp: Tippen Sie auf Ihrer Tastatur auf die Mikrofontaste und sprechen Sie einfach.',
       consent: 'Ich bin einverstanden, dass ' + (CFG.company || '') + ' meine Daten speichert und mir diesen einen Brief per E-Mail sendet. Speicherdauer ' + (CFG.retentionDays || 30) + ' Tage.', priv: 'Datenschutz',
       contact: 'Optional: Sie dürfen mich im Anschluss zu meinem Brief kontaktieren.',
       go: 'Meinen Brief erstellen', local: 'Ihre Website wird von unserem Server gelesen und von einem Modell auf unserem Laptop analysiert. Nichts geht an eine KI-Cloud.',
@@ -165,12 +169,14 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
       s_queued: 'In der Warteschlange', s_fetching: 'Website wird gelesen', s_thinking: 'Lokale KI denkt nach', s_done: 'Brief fertig',
       pos: function (n, s) { return 'Sie sind Nummer ' + n + ' in der Schlange, etwa ' + s + ' Sekunden.'; }, working: 'Sie sind jetzt dran.',
       net: 'Schwache Verbindung. Wir versuchen es weiter, Ihr Brief ist sicher.',
-      done_h: 'Ihr KI-Potenzialbrief', quick: 'Ein Quick Win für den Anfang', cta: '15-Minuten-Kennenlerngespräch buchen',
+      done_h: 'Ihr KI-Potenzialbrief', quick: 'Ein Pilotprojekt, das wir in 2 Wochen mit Ihnen bauen könnten', cta: '15-Minuten-Kennenlerngespräch buchen',
       generic: 'Wir konnten Ihre Seite nicht rechtzeitig lesen, daher ist dies eine allgemeine Version. Wir melden uns persönlich.',
+      wiki: 'Ihre Website blockiert automatische Zugriffe, daher basiert dieser Brief auf Ihrem öffentlichen Wikipedia-Eintrag.',
       redo_h: 'Ihre Website blockiert automatische Zugriffe', redo_p: 'Schreiben Sie in einer Zeile, was Ihr Unternehmen macht, und unsere lokale KI erstellt einen passenden Brief. Per E-Mail kommt nur die bessere Version.', redo_go: 'Brief neu erstellen', redo_short: 'Bitte ein paar Worte mehr.',
-      on_device: 'Läuft auf dem Handy', why: 'Warum', how: 'Wie',
+      why: 'Heute', how: 'Automatisiert', ai_why: 'Warum diese KI', your_task: 'Sie möchten am liebsten nie wieder: ',
+      d_phone: 'Handy', d_laptop: 'Laptop', d_both: 'Handy + Laptop', a_on: 'On-Device-KI', a_cloud: 'Cloud-KI', a_hybrid: 'On-Device- + Cloud-KI',
       mail_sent: 'Wir haben ihn auch gesendet an ', mail_wait: 'Er ist auch auf dem Weg in Ihr Postfach.', mail_failed: 'E-Mail verzögert sich, wir versuchen es weiter. Hier steht der komplette Brief.',
-      ai: 'KI-generiert aus Ihrer öffentlichen Website. Bitte vor Verwendung prüfen.', again: 'Weitere Firma ausprobieren',
+      ai: 'Von KI aus öffentlichen Informationen über Ihr Unternehmen erstellt. Bitte prüfen Sie den Inhalt, bevor Sie sich darauf verlassen.', again: 'Weitere Firma ausprobieren',
       fail_h: 'Das hat nicht geklappt', fail_p: 'Bei uns ist etwas schiefgelaufen. Bitte erneut versuchen oder uns am Stand ansprechen.', retry: 'Erneut versuchen',
       e_name: 'Bitte geben Sie Ihren Namen ein.', e_email: 'Bitte prüfen Sie Ihre E-Mail-Adresse.', e_website: 'Bitte prüfen Sie die Website, zum Beispiel firma.de.', e_consent: 'Bitte stimmen Sie der Einwilligung zu.',
       e_rate: 'Zu viele Anfragen aus diesem Netz. Bitte in einer Minute erneut versuchen.', e_busy: 'Gerade ist sehr viel los. Bitte in einer Minute erneut versuchen.', e_net: 'Keine Verbindung. Neuer Versuch…', e_generic: 'Senden fehlgeschlagen. Bitte erneut versuchen.',
@@ -184,13 +190,14 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
   function tt(k) { return T[lang][k]; }
   function apply() {
     document.documentElement.lang = lang;
-    var map = { t_badge: 'badge', t_h1: 'h1', t_sub: 'sub', t_name: 'name', t_email: 'email', t_web: 'web', t_blurb: 'blurb', t_opt: 'opt', t_consent: 'consent', t_contact: 'contact', t_priv: 'priv', t_local: 'local', t_quick: 'quick', t_done_h: 'done_h', t_fail_h: 'fail_h', t_fail_p: 'fail_p', t_wait_sub: 'wait_sub' };
+    var map = { t_badge: 'badge', t_h1: 'h1', t_sub: 'sub', t_name: 'name', t_email: 'email', t_web: 'web', t_task: 'task', t_opt: 'opt', t_mic: 'mic', t_consent: 'consent', t_contact: 'contact', t_priv: 'priv', t_local: 'local', t_quick: 'quick', t_done_h: 'done_h', t_fail_h: 'fail_h', t_fail_p: 'fail_p', t_wait_sub: 'wait_sub' };
     Object.keys(map).forEach(function (id) { var el = $(id); if (el) el.textContent = tt(map[id]); });
     $('go').textContent = tt('go'); $('retry').textContent = tt('retry'); $('cta').textContent = tt('cta'); $('net').textContent = tt('net');
     $('t_wait_h').textContent = tt('wait_h') + (firstName || '');
     $('aihint').textContent = tt('ai'); $('again').textContent = tt('again'); $('lang').textContent = lang === 'de' ? 'EN' : 'DE';
     var p = $('t_priv'); p.href = (CFG.privacyUrl && !/^CHANGE_ME/.test(CFG.privacyUrl) ? CFG.privacyUrl : BASE + '/privacy') + '#' + lang;
     $('cta').href = CFG.bookingUrl || '#';
+    $('task').placeholder = tt('task_ph');
     buildSteps(window.__stage || 'queued');
   }
   function show(v) {
@@ -270,13 +277,21 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
   function renderDone(s) {
     var b = s.brief || {};
     $('summary').textContent = ''; $('opps').textContent = '';
+    if (s.task && !b.generic) { var tk = el('p', 'note'); tk.appendChild(el('b', null, tt('your_task'))); tk.appendChild(document.createTextNode(lang === 'de' ? '„' + s.task + '“' : '"' + s.task + '"')); $('summary').appendChild(tk); }
     $('summary').appendChild(el('p', null, b.company_summary || ''));
+    if (b.source === 'wikipedia' && !b.generic) $('summary').appendChild(el('p', 'note', tt('wiki')));
     (b.opportunities || []).forEach(function (o, i) {
       var d = el('div', 'opp'); var h = el('h3', null, (i + 1) + '. ' + (o.title || ''));
-      if (o.on_device) h.appendChild(el('span', 'tag', tt('on_device')));
       d.appendChild(h);
-      var p1 = el('p'); p1.appendChild(el('b', null, tt('why') + ': ')); p1.appendChild(document.createTextNode(o.why || '')); d.appendChild(p1);
-      if (o.how) { var p2 = el('p'); p2.appendChild(el('b', null, tt('how') + ': ')); p2.appendChild(document.createTextNode(o.how)); d.appendChild(p2); }
+      var dev = o.device || (o.on_device ? 'phone' : 'laptop'), ai = o.ai || (o.on_device ? 'on-device' : 'cloud');
+      var tags = el('div', 'tags');
+      tags.appendChild(el('span', 'tag', tt(dev === 'both' ? 'd_both' : dev === 'phone' ? 'd_phone' : 'd_laptop')));
+      tags.appendChild(el('span', 'tag', tt(ai === 'hybrid' ? 'a_hybrid' : ai === 'on-device' ? 'a_on' : 'a_cloud')));
+      d.appendChild(tags);
+      var p1 = el('p'); p1.appendChild(el('b', null, tt('why') + ': ')); p1.appendChild(document.createTextNode(o.today || o.why || '')); d.appendChild(p1);
+      var after = o.after || o.how;
+      if (after) { var p2 = el('p'); p2.appendChild(el('b', null, tt('how') + ': ')); p2.appendChild(document.createTextNode(after)); d.appendChild(p2); }
+      if (o.ai_reason) d.appendChild(el('p', 'note', tt('ai_why') + ': ' + o.ai_reason));
       $('opps').appendChild(d);
     });
     $('quick').textContent = b.quick_win || '';
@@ -302,7 +317,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
     var bad = validate(); $('err').textContent = bad ? tt(bad) : '';
     if (bad) return;
     $('go').disabled = true; firstName = $('name').value.trim().split(/\s+/)[0] || '';
-    var payload = { name: $('name').value, email: $('email').value, website: $('website').value, blurb: $('blurb').value, consent: true, contact: $('contact').checked, hp: $('hp').value, lang: lang };
+    var payload = { name: $('name').value, email: $('email').value, website: $('website').value, task: $('task').value, consent: true, contact: $('contact').checked, hp: $('hp').value, lang: lang };
     lastPayload = payload; try { sessionStorage.setItem('dsa_payload', JSON.stringify(payload)); } catch (e) {}
     submit(payload).then(function (j) {
       jobId = j.jobId; persistJob(jobId); save('dsa_email', $('email').value);
@@ -331,7 +346,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
   $('again').addEventListener('click', function () {   // new brief for another company: keep name + email, ask for website and consent again
     clearTimeout(pollTimer); persistJob(null); jobId = null; lastPayload = null;
     try { sessionStorage.removeItem('dsa_payload'); } catch (e) {}
-    $('website').value = ''; $('blurb').value = ''; $('consent').checked = false; $('contact').checked = false; $('err').textContent = ''; $('go').disabled = false;
+    $('website').value = ''; $('task').value = ''; $('consent').checked = false; $('contact').checked = false; $('err').textContent = ''; $('go').disabled = false;
     show('form'); try { $('website').focus(); } catch (e) {}
   });
   $('retry').addEventListener('click', function () { $('go').disabled = false; show('form'); });
