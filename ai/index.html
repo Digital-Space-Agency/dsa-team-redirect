@@ -28,6 +28,9 @@ label{display:block;font-weight:700;font-size:14px;margin:14px 0 6px}
 label:first-child{margin-top:2px}
 label small{font-weight:500;color:var(--muted)}
 input[type=text],input[type=email],textarea{width:100%;padding:13px 15px;border-radius:12px;border:1px solid var(--line);background:rgba(7,5,26,.55);color:var(--text);font:inherit;font-size:16px}
+input.bad{border-color:#ff706f;box-shadow:inset 0 0 0 1px #ff706f}
+.ferr{color:#ff9b9a;font-size:13px;margin-top:6px}
+.ferr:empty{display:none}
 input::placeholder,textarea::placeholder{color:rgba(169,166,207,.6)}
 input:focus,textarea:focus{outline:2px solid var(--lav);outline-offset:1px;border-color:transparent}
 textarea{min-height:72px;resize:vertical}
@@ -131,7 +134,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
 <script>
 (function () {
   'use strict';
-  var CFG = {"company":"Digital Space Agency","event":"AI Summit Hamburg","bookingUrl":"https://calendar.app.google/vCi9GMTTyLDyENtw8","privacyUrl":"https://dsa.team/ai/privacy.html","retentionDays":30,"publicBaseUrl":"https://ai.hushdo.app","model":"gemma4:e4b","avgJobSeconds":11,"publicFormUrl":"https://dsa.team/ai/","apiBase":"https://ai.hushdo.app/webhook/dsa","screenShowTitles":true,"screenShowUrl":false,"wifi":{"ssid":"","password":""}};
+  var CFG = {"company":"Digital Space Agency","event":"AI Summit Hamburg","bookingUrl":"https://calendar.app.google/vCi9GMTTyLDyENtw8","privacyUrl":"https://dsa.team/ai/privacy.html","retentionDays":30,"publicBaseUrl":"https://ai.hushdo.app","model":"gemma4:e4b","avgJobSeconds":11,"publicFormUrl":"https://dsa.team/ai/","apiBase":"https://ai.hushdo.app/webhook/dsa","screenShowTitles":true,"screenShowUrl":true,"wifi":{"ssid":"","password":""}};
   // Served by n8n: same-origin relative paths. Served from the website (dsa.team/ai): CFG.apiBase points at the tunnel.
   var BASE = CFG.apiBase || location.pathname.replace(/\/form\/?$/, '');
   var T = {
@@ -155,7 +158,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
       mail_sent: 'We also emailed it to ', mail_wait: 'It is also on its way to your inbox.', mail_failed: 'Email is delayed, we keep retrying. This page has the full brief.',
       ai: 'Written by AI from public information about your company. Please check it before you rely on it.', again: 'Try another company',
       fail_h: 'That did not work', fail_p: 'Something went wrong on our side. Please try again, or ask us at the stand.', retry: 'Try again',
-      e_name: 'Please enter your name.', e_email: 'Please check your email address.', e_website: 'Please check the website address, for example company.com.', e_consent: 'Please tick the consent box.',
+      e_name: 'Please enter your name (not an email or web address).', e_email: 'Please check your email address.', e_website: 'Please check the website address, for example company.com.', e_consent: 'Please tick the consent box.',
       e_rate: 'Too many requests from this network. Please try again in a minute.', e_busy: 'We are very busy right now. Please try again in a minute.', e_net: 'No connection. Retrying…', e_generic: 'Could not submit. Please try again.',
     },
     de: {
@@ -178,7 +181,7 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
       mail_sent: 'Wir haben ihn auch gesendet an ', mail_wait: 'Er ist auch auf dem Weg in Ihr Postfach.', mail_failed: 'E-Mail verzögert sich, wir versuchen es weiter. Hier steht der komplette Brief.',
       ai: 'Von KI aus öffentlichen Informationen über Ihr Unternehmen erstellt. Bitte prüfen Sie den Inhalt, bevor Sie sich darauf verlassen.', again: 'Weitere Firma ausprobieren',
       fail_h: 'Das hat nicht geklappt', fail_p: 'Bei uns ist etwas schiefgelaufen. Bitte erneut versuchen oder uns am Stand ansprechen.', retry: 'Erneut versuchen',
-      e_name: 'Bitte geben Sie Ihren Namen ein.', e_email: 'Bitte prüfen Sie Ihre E-Mail-Adresse.', e_website: 'Bitte prüfen Sie die Website, zum Beispiel firma.de.', e_consent: 'Bitte stimmen Sie der Einwilligung zu.',
+      e_name: 'Bitte geben Sie Ihren Namen ein (keine E-Mail- oder Webadresse).', e_email: 'Bitte prüfen Sie Ihre E-Mail-Adresse.', e_website: 'Bitte prüfen Sie die Website, zum Beispiel firma.de.', e_consent: 'Bitte stimmen Sie der Einwilligung zu.',
       e_rate: 'Zu viele Anfragen aus diesem Netz. Bitte in einer Minute erneut versuchen.', e_busy: 'Gerade ist sehr viel los. Bitte in einer Minute erneut versuchen.', e_net: 'Keine Verbindung. Neuer Versuch…', e_generic: 'Senden fehlgeschlagen. Bitte erneut versuchen.',
     },
   };
@@ -304,17 +307,38 @@ a.cta{display:block;text-align:center;text-decoration:none;margin-top:16px;paddi
     if (m !== 'sent' && m !== 'gave-up') { /* refresh the mail line once more later */ setTimeout(function () { if (!jobId) return; fetchJson(BASE + '/status?id=' + encodeURIComponent(jobId), {}, 8000).then(function (r) { if (r.json && r.json.ok && r.json.emailStatus === 'sent') $('mailnote').textContent = tt('mail_sent') + ($('email').value || ''); }, function () {}); }, 12000); }
   }
 
+  // Field checks: shown under each field when it is left (and live while fixing it), all at once on submit.
+  var LETTERS; try { LETTERS = new RegExp('\\p{L}', 'gu'); } catch (e) { LETTERS = /[A-Za-z\u00c0-\u024f]/g; }
+  var RULES = {
+    name: function (v) {   // a real name: 2+ letters, not an email/web address, not mostly digits
+      var letters = (v.match(LETTERS) || []).length, digits = (v.match(/\d/g) || []).length;
+      return letters >= 2 && digits < 3 && !/@|https?:|www\.|\.(com|de|net|org|io|ai|app)\b/i.test(v) ? '' : 'e_name';
+    },
+    email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@.]{2,}$/.test(v) && !/\.\.|@\.|\.@/.test(v) ? '' : 'e_email'; },
+    website: function (v) { var host = v.replace(/^https?:\/\//i, '').replace(/^www\./i, ''); return /^(https?:\/\/)?[^\s\/@]+\.[a-z\u00a1-\uffff]{2,}(:\d+)?(\/\S*)?$/i.test(v) && /^[^\/]+\.[^\/]+/.test(host) && !/\.\./.test(v) ? '' : 'e_website'; }
+  };
+  function markField(id, key, quiet) {   // quiet: red outline only, no text, so the page does not shift under a finger mid-tap
+    var el = $(id), m = $(id + '_err');
+    if (!m) { m = document.createElement('div'); m.id = id + '_err'; m.className = 'ferr'; m.setAttribute('aria-live', 'polite'); el.parentNode.insertBefore(m, el.nextSibling); }
+    if (key) el.classList.add('bad'); else el.classList.remove('bad');
+    el.setAttribute('aria-invalid', key ? 'true' : 'false'); if (!quiet || !key) m.textContent = key ? tt(key) : '';
+  }
+  function checkField(id, quiet) { var k = RULES[id]($(id).value.trim()); markField(id, k, quiet); return k; }
+  ['name', 'email', 'website'].forEach(function (id) {
+    var touched = false;
+    $(id).addEventListener('blur', function () { if ($(id).value.trim()) { touched = true; checkField(id, true); } });
+    $(id).addEventListener('input', function () { if (touched) checkField(id); });
+  });
   function validate() {
-    var name = $('name').value.trim(), email = $('email').value.trim(), web = $('website').value.trim();
-    if (name.length < 2) return 'e_name';
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return 'e_email';
-    if (!/^(https?:\/\/)?[^\s\/]+\.[^\s\/.]{2,}(\/.*)?$/i.test(web)) return 'e_website';
+    var first = '';
+    ['name', 'email', 'website'].forEach(function (id) { var k = checkField(id); if (k && !first) { first = k; try { $(id).focus(); } catch (e) {} } });
+    if (first) return first;
     if (!$('consent').checked) return 'e_consent';
     return '';
   }
   $('f').addEventListener('submit', function (ev) {
     ev.preventDefault();
-    var bad = validate(); $('err').textContent = bad ? tt(bad) : '';
+    var bad = validate(); $('err').textContent = bad === 'e_consent' ? tt(bad) : '';   // field errors show under their field
     if (bad) return;
     $('go').disabled = true; firstName = $('name').value.trim().split(/\s+/)[0] || '';
     var payload = { name: $('name').value, email: $('email').value, website: $('website').value, task: $('task').value, consent: true, contact: $('contact').checked, hp: $('hp').value, lang: lang };
